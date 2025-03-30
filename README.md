@@ -15,7 +15,7 @@ This guide walks you through setting up an Orange Pi Zero 2W to run [SpyServer](
 - Card reader  
 - Wi-Fi credentials  
 - Power supply for Orange Pi Zero 2W (5V, 2A) 
-- Another device (Mac/PC) on the same network and with and SDR software installed (e.g. SDR++) for the setup and testing
+- Another device (Mac/PC) on the same network and with and SDR software installed (e.g. [SDR++](https://www.sdrpp.org)) for the setup and testing
 
 ---
 
@@ -23,7 +23,7 @@ This guide walks you through setting up an Orange Pi Zero 2W to run [SpyServer](
 
 #### 1. Download and Flash Armbian
 
-- Download the CLI version from  
+- Download the Minimal / IOT version from  
   👉 https://www.armbian.com/orange-pi-zero-2w  
 - Flash to SD card using [Balena Etcher](https://www.balena.io/etcher/)
 
@@ -31,9 +31,12 @@ This guide walks you through setting up an Orange Pi Zero 2W to run [SpyServer](
 
 #### 2. Create Autoconfig File for Headless Boot
 
-Mount the **root filesystem partition** (not `/boot`) and edit the following file:
+Hint: for mac users, if you do not want to install additional softwares via the terminal, use linux VM via [UTM](https://getutm.app)
+
+Mount the SD Card and copy the below contents to the following file:
 
 **Path:** `/root/.not_logged_in_yet`  
+
 **Contents:**
 
 ```bash
