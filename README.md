@@ -363,6 +363,37 @@ rm -rf ~/airspyhf ~/spyserver ~/spyserver-arm64.tgz ~/spyserver.config
 
 ⸻
 
+## 🚀 Part 3: Setup Tailscale for Access via the Internet
+
+1. Install:
+
+```bash
+curl -fsSL https://tailscale.com/install.sh | sh
+```
+
+2. Start and authenticate:
+
+```bash
+sudo tailscale up
+```
+
+It will give you a link — open it in a browser, sign in with Google/GitHub/etc. ***Also install Tailscale on our end device with the SDR software installed***
+
+3. Get your Pi’s private Tailscale IP:
+
+```bash
+tailscale ip -4
+```
+
+✅ Now You Can:
+	
+ 	•	Open SDR++ on any other device with Tailscale installed
+	
+ 	•	Connect directly to your Pi using that 100.x.x.x IP and port 5555
+	
+
+⸻
+
 ✅ Final Notes
 
 You now have a compact, headless SpyServer SDR setup running on the Orange Pi Zero 2W — perfect for remote HF monitoring, low-power SDR stations, or portable deployments.
