@@ -1,6 +1,6 @@
-# Orange Pi Zero 2W + Airspy Driver & SpyServer Setup (Headless Armbian Minimal Community)
+# Orange Pi Zero 2W + Airspy Driver & SpyServer Setup + Tailscale (Headless Armbian Minimal Community)
 
-This guide walks you through setting up an Orange Pi Zero 2W to run [SpyServer](https://airspy.com/quickstart/) in **headless mode** with an **Airspy Discovery HF+** using **Armbian Minimal (Bookworm)**. It's designed for a lightweight, low-power, reliable SDR streaming setup.
+This guide walks you through setting up an Orange Pi Zero 2W to run [SpyServer](https://airspy.com/quickstart/) in **headless mode** with an **Airspy Discovery HF+** using **Armbian Minimal (Bookworm)** and remote access via **Tailscale**. It's designed for a lightweight, low-power, reliable SDR streaming setup.
 
 ---
 
