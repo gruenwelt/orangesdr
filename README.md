@@ -333,35 +333,6 @@ Reboot to Apply All Changes
 
 ---
 
-🧼 Optional Cleanup
-
-
-Remove Build Tools
-
-```bash
-sudo apt remove --purge -y git cmake libusb-1.0-0-dev build-essential
-sudo apt autoremove -y
-```
-
-
-
-⸻
-
-
-Uninstall Airspy Driver + SpyServer
-
-```bash
-sudo rm /usr/local/lib/libairspyhf* /usr/local/bin/airspyhf*
-sudo rm /etc/udev/rules.d/52-airspyhf.rules
-sudo udevadm control --reload-rules
-sudo udevadm trigger
-rm -rf ~/airspyhf ~/spyserver ~/spyserver-arm64.tgz ~/spyserver.config
-```
-  
-
-
-
-⸻
 
 ## 🚀 Part 3: Setup Tailscale for Access via the Internet
 
@@ -392,7 +363,42 @@ tailscale ip -4
  	•	Connect directly to your Pi using that 100.x.x.x IP and port 5555
 	
 
+---
+
+
+🧼 Optional Cleanup
+
+
+Remove Build Tools
+
+```bash
+sudo apt remove --purge -y git cmake libusb-1.0-0-dev build-essential
+sudo apt autoremove -y
+```
+
+
+
 ⸻
+
+
+Uninstall Airspy Driver + SpyServer + Tailscale
+
+```bash
+sudo rm /usr/local/lib/libairspyhf* /usr/local/bin/airspyhf*
+sudo rm /etc/udev/rules.d/52-airspyhf.rules
+sudo udevadm control --reload-rules
+sudo udevadm trigger
+rm -rf ~/airspyhf ~/spyserver ~/spyserver-arm64.tgz ~/spyserver.config
+sudo tailscale down
+sudo systemctl disable --now tailscaled
+sudo apt remove --purge tailscale -y
+sudo apt autoremove -y
+```
+  
+
+---
+
+
 
 ✅ Final Notes
 
