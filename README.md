@@ -259,10 +259,106 @@ sudo systemctl start spyserver
 ✅ SpyServer now starts automatically after every reboot.
 
 
+---
+
+## Test on another device running SDR++:
+
+ Source: SpyServer
+ 
+ Host: 192.168.0.xxx (your Orange Pi’s IP)
+ 
+ Port: 5555
+ 
+ Username/password: leave blank
+
+
+
 
 ---
 
-9. Optional optimizations
+
+## 🚀 Part 3: Setup Tailscale for Access via the Internet
+
+1. Install:
+
+```bash
+curl -fsSL https://tailscale.com/install.sh | sh
+```
+
+2. Start and authenticate:
+
+```bash
+sudo tailscale up
+```
+
+It will give you a link — open it in a browser, sign in with Google/GitHub/etc. ***Also install Tailscale on our end device with the SDR software installed***
+
+3. Get your Pi’s private Tailscale IP:
+
+```bash
+tailscale ip -4
+```
+
+✅ Now You Can:
+	
+ 	•	Open SDR++ on any other device with Tailscale installed
+	
+ 	•	Connect directly to your Pi using that 100.x.x.x IP and port 5555
+	
+
+---
+
+
+## Optional optimizations
+
+🌿 Enable Wi-Fi Power Saving
+
+🔧 1. Enable Power Save (Live)
+
+```Bash
+sudo iw dev wlan0 set power_save on
+```
+
+Test latency (optional):
+
+```Bash
+ping -i 0.2 8.8.8.8
+```
+
+💾 2. Make it Persistent via systemd
+
+Create a systemd service:
+
+```Bash
+sudo nano /etc/systemd/system/wifi-powersave.service
+```
+
+Paste:
+
+```Bash
+[Unit]
+Description=Enable Wi-Fi power save mode
+After=network.target
+
+[Service]
+ExecStart=/sbin/iw dev wlan0 set power_save on
+RemainAfterExit=true
+
+[Install]
+WantedBy=multi-user.target
+```
+
+Enable it:
+
+
+```Bash
+sudo systemctl daemon-reload
+sudo systemctl enable wifi-powersave
+```
+
+✅ This ensures Wi-Fi power saving is applied on every boot.
+
+⸻
 
 Disable Bluetooth & HDMI (optional, to reduce interference or power usage)
 
@@ -318,55 +414,7 @@ Reboot to Apply All Changes
 
 ---
 
-10. Test on another device running SDR++:
-	
- 	•	Source: SpyServer
-
- 	•	Host: 192.168.0.xxx (your Orange Pi’s IP)
-	
- 	•	Port: 5555
-	
- 	•	Username/password: leave blank
-
-
-
-
----
-
-
-## 🚀 Part 3: Setup Tailscale for Access via the Internet
-
-1. Install:
-
-```bash
-curl -fsSL https://tailscale.com/install.sh | sh
-```
-
-2. Start and authenticate:
-
-```bash
-sudo tailscale up
-```
-
-It will give you a link — open it in a browser, sign in with Google/GitHub/etc. ***Also install Tailscale on our end device with the SDR software installed***
-
-3. Get your Pi’s private Tailscale IP:
-
-```bash
-tailscale ip -4
-```
-
-✅ Now You Can:
-	
- 	•	Open SDR++ on any other device with Tailscale installed
-	
- 	•	Connect directly to your Pi using that 100.x.x.x IP and port 5555
-	
-
----
-
-
-🧼 Optional Cleanup
+## 🧼 Optional Cleanup
 
 
 Remove Build Tools
@@ -400,6 +448,6 @@ sudo apt autoremove -y
 
 
 
-✅ Final Notes
+## ✅ Final Notes
 
 You now have a compact, headless SpyServer SDR setup running on the Orange Pi Zero 2W — perfect for remote HF monitoring, low-power SDR stations, or portable deployments.
