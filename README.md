@@ -100,7 +100,7 @@ arp -a
   
 Look for a new IP with orangepizero2w host name (e.g. 192.168.0.xxx)
 
-⸻
+---
 
 5. SSH In
 
@@ -116,7 +116,7 @@ orangepizero2w
 ```
 
 
-⸻
+---
 
 ## 🧰 Part 2: Airspy HF+ Discovery + SpyServer Setup
 
@@ -125,7 +125,7 @@ orangepizero2w
 	•	Armbian Minimal (Bookworm)
 	•	Airspy HF+
 
-⸻
+---
 
 🔧 Setup Instructions
 
@@ -137,7 +137,7 @@ sudo apt install -y git cmake libusb-1.0-0-dev build-essential wget
 ```
 
 
-⸻
+---
 
 2. Build & Install Airspy Discovery HF+ Driver
 
@@ -153,7 +153,7 @@ sudo ldconfig
 ```
 
 
-⸻
+---
 
 3. Set udev Rules for USB Access
 
@@ -169,7 +169,7 @@ newgrp plugdev
 ```
 
 
-⸻
+---
 
 4. Test the Driver
 
@@ -179,7 +179,8 @@ airspyhf_info
   
 ✅ You should see serial number, firmware, and supported sample rates.
 
-⸻
+
+---
 
 5. Download & Extract SpyServer
 
@@ -193,7 +194,8 @@ This provides:
 	•	spyserver
 	•	spyserver.config (default config is sufficient)
 
-⸻
+
+---
 
 6. Run SpyServer
 
@@ -208,7 +210,7 @@ Connected to Airspy HF+ device
 
 
 
-⸻
+---
 
 7. Connect from SDR++
 
@@ -218,7 +220,8 @@ On another device running SDR++:
 	•	Port: 5555
 	•	Username/password: leave blank
 
-⸻
+
+---
 
 ⛓️ 8. Auto-start SpyServer on Boot (systemd)
 
@@ -255,9 +258,95 @@ sudo systemctl start spyserver
   
 ✅ SpyServer now starts automatically after every reboot.
 
+
+
+---
+
+9. Optional optimizations
+
+Disable Bluetooth & HDMI (optional, to reduce interference or power usage)
+
+Disable Bluetooth:
+
+```Bash
+echo "blacklist btbcm" | sudo tee -a /etc/modprobe.d/disable-bluetooth.conf
+echo "blacklist hci_uart" | sudo tee -a /etc/modprobe.d/disable-bluetooth.conf
+sudo systemctl disable --now bluetooth
+```
+
+Disable HDMI:
+
+```Bash
+echo "hdmi_blanking=2" | sudo tee -a /boot/armbianEnv.txt
+```
+
 ⸻
 
+Disable Logging & Unnecessary Services (optional, to reduce SD card wear)
+
+Disable rsyslog:
+
+```Bash
+sudo systemctl stop rsyslog
+sudo systemctl disable rsyslog
+```
+
+⸻
+
+Disable other services:
+
+```Bash
+sudo systemctl disable --now man-db.timer
+sudo systemctl disable --now apt-daily.timer apt-daily-upgrade.timer
+sudo systemctl mask systemd-journald.service
+```
+
+⚠️ Disabling journald prevents system logging. Only do this on dedicated setups.
+
+⸻
+
+Disable Cron Daemon (optional)
+
+```Bash
+sudo systemctl disable --now cron
+```
+
+⸻
+
+Reboot to Apply All Changes
+
+
+---
+
+10. Test on another device running SDR++:
+	
+ 	•	Source: SpyServer
+
+ 	•	Host: 192.168.0.xxx (your Orange Pi’s IP)
+	
+ 	•	Port: 5555
+	
+ 	•	Username/password: leave blank
+
+
+
+
+---
+
 🧼 Optional Cleanup
+
+
+Remove Build Tools
+
+```bash
+sudo apt remove --purge -y git cmake libusb-1.0-0-dev build-essential
+sudo apt autoremove -y
+```
+
+
+
+⸻
+
 
 Uninstall Airspy Driver + SpyServer
 
@@ -269,12 +358,7 @@ sudo udevadm trigger
 rm -rf ~/airspyhf ~/spyserver ~/spyserver-arm64.tgz ~/spyserver.config
 ```
   
-Remove Build Tools
 
-```bash
-sudo apt remove --purge -y git cmake libusb-1.0-0-dev build-essential
-sudo apt autoremove -y
-```
 
 
 ⸻
