@@ -240,6 +240,7 @@ After=network.target
 
 [Service]
 Type=simple
+ExecStartPre=/bin/sleep 5
 User=sdradmin
 ExecStart=/home/sdradmin/spyserver /home/sdradmin/spyserver.config
 Restart=on-failure
